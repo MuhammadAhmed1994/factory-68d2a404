@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  CUSTOMER
+}
+
+enum TicketSeverity {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum TicketStatus {
+  NEW
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+model User {
+  id             String               @id @default(cuid())
+  email          String               @unique
+  name           String
+  passwordHash   String
+  role           UserRole
+  isActive       Boolean              @default(true)
+  createdAt      DateTime             @default(now()) @db.Timestamptz(3)
+  updatedAt      DateTime             @updatedAt @db.Timestamptz(3)
+  sessions       Session[]
+  tickets        Ticket[]             @relation("TicketCustomer")
+  createdTickets Ticket[]             @relation("TicketCreatedBy")
+  updatedTickets Ticket[]             @relation("TicketUpdatedBy")
+  attachments    Attachment[]         @relation("AttachmentUploadedBy")
+  statusChanges  TicketStatusChange[] @relation("StatusChangedBy")
+}
+
+model Session {
+  id             String   @id @default(cuid())
+  userId         String
+  tokenHash      String   @unique
+  lastActivityAt DateTime @db.Timestamptz(3)
+  expiresAt      DateTime @db.Timestamptz(3)
+  createdAt      DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt      DateTime @updatedAt @db.Timestamptz(3)
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Ticket {
+  id           String               @id @default(cuid())
+  reference    Int                  @unique @default(autoincrement())
+  customerId   String
+  createdById  String
+  updatedById  String?
+  title        String
+  description  String
+  severity     TicketSeverity
+  status       TicketStatus         @default(NEW)
+  createdAt    DateTime             @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime             @updatedAt @db.Timestamptz(3)
+  customer     User                 @relation("TicketCustomer", fields: [customerId], references: [id], onDelete: Restrict)
+  createdBy    User                 @relation("TicketCreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
+  updatedBy    User?                @relation("TicketUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+  attachments  Attachment[]
+  statusChanges TicketStatusChange[]
+
+  @@index([customerId])
+  @@index([createdById])
+  @@index([updatedById])
+  // Support filtered, newest-first ticket lists for admins and customers.
+  @@index([status, createdAt])
+  @@index([severity, createdAt])
+  @@index([customerId, status, createdAt])
+}
+
+model Attachment {
+  id           String   @id @default(cuid())
+  ticketId     String
+  uploadedById String
+  fileName     String
+  sizeBytes    BigInt
+  mimeType     String
+  storageKey   String   @unique
+  createdAt    DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime @updatedAt @db.Timestamptz(3)
+  ticket       Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  uploadedBy   User     @relation("AttachmentUploadedBy", fields: [uploadedById], references: [id], onDelete: Restrict)
+
+  @@index([ticketId])
+  @@index([uploadedById])
+}
+
+model TicketStatusChange {
+  id          String       @id @default(cuid())
+  ticketId    String
+  changedById String
+  fromStatus  TicketStatus
+  toStatus    TicketStatus
+  createdAt   DateTime     @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime     @updatedAt @db.Timestamptz(3)
+  ticket      Ticket       @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  changedBy   User         @relation("StatusChangedBy", fields: [changedById], references: [id], onDelete: Restrict)
+
+  @@index([ticketId])
+  @@index([changedById])
+}

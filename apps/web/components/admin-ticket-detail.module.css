@@ -1,0 +1,79 @@
+.detailPage {
+  width: min(100%, 1280px);
+  margin: 0 auto;
+  padding: 18px clamp(16px, 4vw, 40px) 52px;
+}
+
+.breadcrumb {
+  margin: 0 0 12px;
+  color: var(--sd-muted-foreground, #526675);
+  font-size: 12px;
+}
+
+.breadcrumb a { font-weight: 600; }
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(290px, 340px);
+  gap: 18px;
+  align-items: start;
+}
+
+.managementPanel { min-width: 0; }
+.managementPanel :global(main) {
+  width: 100%;
+  margin: 0;
+  padding: 12px 0 0;
+}
+.managementPanel :global(main > header) { margin-bottom: 18px; }
+.managementPanel :global(main > section:last-of-type) { margin-top: 16px; }
+.attachmentsPanel { min-width: 0; padding-top: 12px; }
+.attachmentsPanel > section { padding: 18px 16px; }
+.downloadError {
+  margin: 10px 0 0;
+  color: var(--sd-destructive, #B42318);
+  font-size: 12px;
+}
+
+.statePage {
+  display: grid;
+  min-height: 55vh;
+  place-items: start center;
+  padding: 64px 20px;
+}
+
+.stateCard {
+  width: min(100%, 580px);
+  padding: 28px;
+  border: 1px solid var(--sd-border, #CFD9E0);
+  border-radius: 12px;
+  background: var(--sd-card, #fff);
+  box-shadow: var(--sd-shadow-panel);
+}
+.stateCard h1 { margin: 0; font-size: 22px; line-height: 30px; }
+.stateCard p { color: var(--sd-muted-foreground, #526675); }
+.stateCard a { display: inline-block; margin-right: 18px; font-weight: 600; }
+.stateCard button {
+  min-height: 38px;
+  padding: 0 13px;
+  color: #fff;
+  background: var(--sd-primary, #245B78);
+  border: 1px solid var(--sd-primary, #245B78);
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.skeleton { display: grid; gap: 12px; margin-top: 24px; }
+.skeleton span { display: block; height: 16px; border-radius: 4px; background: var(--sd-muted, #EDF2F5); }
+.skeleton span:first-child { width: 70%; height: 28px; }
+.skeleton span:last-child { width: 46%; }
+
+@media (max-width: 820px) {
+  .contentGrid { grid-template-columns: minmax(0, 1fr); }
+  .attachmentsPanel { order: 2; padding-top: 0; }
+}
+@media (max-width: 600px) {
+  .detailPage { padding-top: 10px; }
+  .managementPanel :global(main) { padding-top: 8px; }
+  .stateCard { padding: 22px; }
+}

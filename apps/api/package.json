@@ -56,5 +56,8 @@
     "setupFiles": [
       "reflect-metadata"
     ]
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }
