@@ -1,5 +1,3 @@
-// Written by the factory: every call to the api goes through here. The api runs on 3001 (the web
-// app on 3000); NEXT_PUBLIC_API_URL points elsewhere, as Test and deployments do.
 const API_BASE_URL = (process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001').replace(/\/$/, '')
 
 export class ApiError extends Error {
@@ -13,25 +11,46 @@ export class ApiError extends Error {
   }
 }
 
-/** Calls the api, sending the browser's session cookie. */
+function isFormData(body: BodyInit | null | undefined): body is FormData {
+  return typeof FormData !== 'undefined' && body instanceof FormData
+}
+
+function getErrorMessage(details: unknown, status: number): string {
+  if (typeof details === 'object' && details !== null && 'message' in details) {
+    const message = details.message
+    if (typeof message === 'string') return message
+    if (Array.isArray(message) && message.every((item) => typeof item === 'string')) return message.join(', ')
+  }
+  if (typeof details === 'string' && details.length > 0) return details
+  return `API request failed (${status})`
+}
+
+/** Calls the API with the browser's session cookie; cookie contents are never exposed to JavaScript. */
 export async function apiRequest<T>(path: string, options: Omit<RequestInit, 'credentials'> = {}): Promise<T> {
+  const headers = new Headers(options.headers)
+  headers.set('Accept', 'application/json')
+  if (options.body != null && !isFormData(options.body) && !headers.has('Content-Type')) {
+    headers.set('Content-Type', 'application/json')
+  }
+
   const response = await fetch(`${API_BASE_URL}${path.startsWith('/') ? path : `/${path}`}`, {
     ...options,
+    headers,
     credentials: 'include',
-    headers: {
-      Accept: 'application/json',
-      ...(options.body ? { 'Content-Type': 'application/json' } : {}),
-      ...options.headers,
-    },
   })
-  if (!response.ok) {
-    const details: unknown = await response.json().catch(() => undefined)
-    const message =
-      typeof details === 'object' && details !== null && 'message' in details && typeof details.message === 'string'
-        ? details.message
-        : `API request failed (${response.status})`
-    throw new ApiError(response.status, message, details)
+  const responseText = await response.text()
+  let payload: unknown
+  if (responseText) {
+    try {
+      payload = JSON.parse(responseText)
+    } catch {
+      payload = responseText
+    }
   }
-  if (response.status === 204) return undefined as T
-  return (await response.json()) as T
+
+  if (!response.ok) {
+    throw new ApiError(response.status, getErrorMessage(payload, response.status), payload)
+  }
+  if (response.status === 204 || payload === undefined) return undefined as T
+  return payload as T
 }
