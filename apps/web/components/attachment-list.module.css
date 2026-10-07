@@ -1,0 +1,239 @@
+.attachmentSection {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid var(--sd-border, #cfd9e0);
+  border-radius: var(--sd-radius-panel, 8px);
+  background: var(--sd-card, #fff);
+  color: var(--sd-foreground, #172b3a);
+  box-shadow: var(--sd-shadow-panel, 0 1px 2px rgb(23 43 58 / 6%));
+}
+
+.headingRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.heading {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 26px;
+}
+
+.count,
+.metadata,
+.pickerHint,
+.progressText {
+  color: var(--sd-muted-foreground, #526675);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.pickerArea {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px;
+  border: 1px dashed var(--sd-border, #cfd9e0);
+  border-radius: var(--sd-radius-control, 4px);
+  background: var(--sd-background, #f6f8fa);
+}
+
+.fileInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.fileInput:focus-visible + .pickButton {
+  outline: 3px solid var(--sd-ring, #287aa1);
+  outline-offset: 3px;
+}
+
+.pickButton,
+.uploadButton {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  border: 1px solid var(--sd-primary, #245b78);
+  border-radius: var(--sd-radius-control, 4px);
+  background: var(--sd-primary, #245b78);
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  transition: background-color 120ms ease, box-shadow 120ms ease;
+}
+
+.pickButton:hover,
+.uploadButton:hover:not(:disabled) {
+  background: #173f57;
+}
+
+.pickButton:focus-visible,
+.uploadButton:focus-visible,
+.removeAction:focus-visible,
+.downloadAction:focus-visible {
+  outline: 3px solid var(--sd-ring, #287aa1);
+  outline-offset: 3px;
+}
+
+.pickerHint {
+  flex: 1 1 220px;
+}
+
+.emptyState {
+  margin: 16px 0 0;
+  padding: 20px 16px;
+  border: 1px solid var(--sd-border, #cfd9e0);
+  border-radius: var(--sd-radius-control, 4px);
+  color: var(--sd-muted-foreground, #526675);
+  text-align: center;
+}
+
+.fileList {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fileRow {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 12px;
+  border: 1px solid var(--sd-border, #cfd9e0);
+  border-radius: var(--sd-radius-control, 4px);
+  background: var(--sd-card, #fff);
+}
+
+.fileDetails {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.fileName {
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+}
+
+.metadata {
+  overflow-wrap: anywhere;
+}
+
+.downloadAction,
+.removeAction {
+  display: inline-flex;
+  min-height: 36px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: var(--sd-radius-control, 4px);
+  background: transparent;
+  color: var(--sd-primary, #245b78);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.downloadAction:hover,
+.removeAction:hover:not(:disabled) {
+  background: var(--sd-secondary, #e7f0f4);
+}
+
+.removeAction:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.progressGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.progress {
+  width: min(220px, 45vw);
+  height: 8px;
+  accent-color: var(--sd-primary, #245b78);
+}
+
+.progressText {
+  white-space: nowrap;
+}
+
+.error {
+  margin: 5px 0 0;
+  color: var(--sd-destructive, #b42318);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.uploadActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.uploadButton:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.visuallyHidden,
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+@media (max-width: 520px) {
+  .attachmentSection {
+    padding: 16px;
+  }
+
+  .fileRow {
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .downloadAction,
+  .removeAction {
+    padding: 0 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pickButton,
+  .uploadButton {
+    transition: none;
+  }
+}
