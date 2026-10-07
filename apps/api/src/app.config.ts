@@ -50,6 +50,11 @@ export const config = {
   get jwtSecret(): string {
     return secret('JWT_SECRET');
   },
+  get databaseUrl(): string | undefined {
+    const value = fromEnv('DATABASE_URL');
+    if (!value && isProduction()) throw new Error('DATABASE_URL must be set in production');
+    return value;
+  },
 };
 
 // Shared by main.ts and the test setup, so tests exercise the same pipes and CORS as the app.
@@ -57,6 +62,7 @@ export const config = {
 // its first request.
 export function configureApp(app: INestApplication): void {
   void config.jwtSecret;
+  void config.databaseUrl;
   app.enableCors({ origin: corsOrigins(), credentials: true });
   // whitelist/forbidNonWhitelisted reject unknown fields; use the status the Spec requires (often 422).
   app.useGlobalPipes(
