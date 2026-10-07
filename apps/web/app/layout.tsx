@@ -2,10 +2,13 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import './globals.css'
 
-// Written by the factory. The web foundation task may change the metadata, fonts and shell.
 export const metadata: Metadata = {
-  title: 'App',
-  description: 'Built by the AI factory.',
+  title: {
+    default: 'SimpleDesk',
+    template: '%s | SimpleDesk',
+  },
+  description:
+    'SimpleDesk is a clear, focused place for support teams and customers to manage support tickets.',
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
