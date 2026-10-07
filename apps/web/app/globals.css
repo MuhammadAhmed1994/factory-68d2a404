@@ -1,16 +1,262 @@
-/* Written by the factory. The web foundation task replaces these with the UxDesign tokens. */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap');
+
 :root {
-  --color-background: #ffffff;
-  --color-foreground: #111827;
+  color-scheme: light;
+  --sd-primary: #245B78;
+  --sd-secondary: #E7F0F4;
+  --sd-accent: #B9D9D1;
+  --sd-background: #F6F8FA;
+  --sd-foreground: #172B3A;
+  --sd-card: #FFFFFF;
+  --sd-muted: #EDF2F5;
+  --sd-border: #CFD9E0;
+  --sd-muted-foreground: #526675;
+  --sd-destructive: #B42318;
+  --sd-ring: #287AA1;
+  --sd-success: #216E4E;
+  --sd-warning: #8A5200;
+  --sd-radius-control: 4px;
+  --sd-radius-panel: 8px;
+  --sd-radius-large: 12px;
+  --sd-space-1: 4px;
+  --sd-space-2: 8px;
+  --sd-space-3: 12px;
+  --sd-space-4: 16px;
+  --sd-space-5: 20px;
+  --sd-space-6: 24px;
+  --sd-space-8: 32px;
+  --sd-space-10: 40px;
+  --sd-space-12: 48px;
+  --sd-space-16: 64px;
+  --sd-shadow-panel: 0 1px 2px rgb(23 43 58 / 6%);
+  --sd-motion-fast: 120ms;
+  --sd-motion-base: 180ms;
+  --sd-ease-enter: cubic-bezier(0.2, 0, 0, 1);
+
+  background: var(--sd-background);
+  color: var(--sd-foreground);
+  font-family: 'Inter', Arial, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--sd-background);
+}
+
 body {
+  min-height: 100vh;
   margin: 0;
-  background: var(--color-background);
-  color: var(--color-foreground);
-  font-family: system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+a {
+  color: var(--sd-primary);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--sd-motion-fast) var(--sd-ease-enter),
+    background-color var(--sd-motion-fast) var(--sd-ease-enter),
+    box-shadow var(--sd-motion-fast) var(--sd-ease-enter);
+}
+
+a:hover {
+  color: #173F57;
+}
+
+:focus-visible {
+  outline: 3px solid var(--sd-ring);
+  outline-offset: 3px;
+}
+
+::selection {
+  color: var(--sd-foreground);
+  background: var(--sd-accent);
+}
+
+.welcome {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  padding: 0 clamp(24px, 7vw, 104px);
+}
+
+.topbar {
+  display: flex;
+  min-height: 88px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--sd-border);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--sd-foreground);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.wordmark-mark {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: var(--sd-radius-control);
+  background: var(--sd-primary);
+  color: var(--sd-card);
+  font-size: 15px;
+  line-height: 1;
+}
+
+.topbar-note,
+.footer {
+  color: var(--sd-muted-foreground);
+  font-size: 12px;
+}
+
+.hero {
+  display: grid;
+  width: min(100%, 1040px);
+  flex: 1;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.44fr);
+  align-items: center;
+  gap: clamp(48px, 10vw, 144px);
+  align-self: center;
+  padding: 80px 0 96px;
+}
+
+.hero-copy {
+  max-width: 660px;
+}
+
+.eyebrow {
+  margin: 0 0 20px;
+  color: var(--sd-primary);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+.hero h1 {
+  max-width: 620px;
+  margin: 0;
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.12;
+}
+
+.hero-description {
+  max-width: 505px;
+  margin: 24px 0 32px;
+  color: var(--sd-muted-foreground);
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.primary-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 0 18px;
+  border: 1px solid var(--sd-primary);
+  border-radius: var(--sd-radius-control);
+  background: var(--sd-primary);
+  color: var(--sd-card);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.primary-link:hover {
+  background: #173F57;
+  color: var(--sd-card);
+}
+
+.hero-note {
+  padding: 8px 0 8px 24px;
+  border-left: 1px solid var(--sd-border);
+}
+
+.note-rule {
+  display: block;
+  width: 32px;
+  height: 3px;
+  margin-bottom: 20px;
+  border-radius: 2px;
+  background: var(--sd-accent);
+}
+
+.hero-note p {
+  margin: 0 0 10px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.footer {
+  display: flex;
+  min-height: 64px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-top: 1px solid var(--sd-border);
+}
+
+@media (max-width: 700px) {
+  .welcome {
+    padding: 0 24px;
+  }
+
+  .topbar {
+    min-height: 72px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 44px;
+    padding: 64px 0;
+  }
+
+  .hero-note {
+    max-width: 320px;
+  }
+
+  .footer {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    padding: 16px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
