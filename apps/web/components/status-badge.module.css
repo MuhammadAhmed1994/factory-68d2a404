@@ -1,0 +1,20 @@
+.badge {
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  gap: 7px;
+  padding: 2px 9px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  white-space: nowrap;
+}
+.marker { width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: currentColor; }
+.new, .inProgress { border-color: #9BBAC8; background: #E7F0F4; color: #173F57; }
+.resolved, .active { border-color: #91B7A5; background: #E7F2ED; color: #18563C; }
+.closed, .inactive { border-color: #CFD9E0; background: #EDF2F5; color: #435866; }
+.low { border-color: #91B7A5; background: #E7F2ED; color: #18563C; }
+.medium { border-color: #D6B477; background: #FFF4DE; color: #704100; }
+.high { border-color: #D9A39D; background: #FCECEA; color: #8F2118; }
