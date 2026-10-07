@@ -1,7 +1,19 @@
 import { Module } from '@nestjs/common';
+import { AttachmentsModule } from './attachments/attachments.module';
+import { AuthModule } from './auth/auth.module';
+import { CustomersModule } from './customers/customers.module';
+import { TicketCreationModule } from './ticket-creation/ticket-creation.module';
+import { TicketManagementModule } from './ticket-management/ticket-management.module';
+import { TicketsModule } from './tickets/tickets.module';
 
-// Written by the factory. The wiring task registers every feature module here.
 @Module({
-  imports: [],
+  imports: [
+    AuthModule,
+    CustomersModule,
+    TicketsModule,
+    AttachmentsModule,
+    TicketCreationModule,
+    TicketManagementModule,
+  ],
 })
 export class AppModule {}
