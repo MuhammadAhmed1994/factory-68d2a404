@@ -1,0 +1,45 @@
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 14px 14px 16px;
+  border: 1px solid;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgb(23 43 58 / 6%);
+}
+.success { border-color: #91B7A5; background: #F1F7F4; color: #18563C; }
+.validation { border-color: #D6B477; background: #FFF8E9; color: #704100; }
+.authentication { border-color: #D9A39D; background: #FFF5F4; color: #8F2118; }
+.notFound { border-color: #9BBAC8; background: #F1F6F8; color: #173F57; }
+.symbol {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+}
+.copy { min-width: 0; flex: 1; }
+.title { margin: 0; font-size: 14px; font-weight: 600; line-height: 21px; }
+.message { margin: 3px 0 0; font-size: 13px; line-height: 19px; }
+.dismiss {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  place-items: center;
+  margin: -5px -5px 0 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.dismiss:hover { background: rgb(23 43 58 / 8%); }
+.dismiss span { font-size: 22px; line-height: 1; }
